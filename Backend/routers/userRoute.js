@@ -2,7 +2,8 @@ import express from 'express'
 
 const userRouter = express.Router();
 import { body } from 'express-validator';
-import { createUserCtrl } from '../controllers/userControler.js';
+import { createUserCtrl, getUserProfile, loginUserCtrl } from '../controllers/userControler.js';
+import { authUser } from '../middlewares/Auth.js';
 
 
 userRouter.post(
@@ -18,5 +19,12 @@ userRouter.post(
   ],
   createUserCtrl
 );
+
+userRouter.post("/login",[
+  body("email").isEmail().withMessage("Invalid email"),
+  body("password").isLength({min:6}).withMessage("Password must be at least 6 characters long")
+],loginUserCtrl)
+
+userRouter.get("/profile", authUser, getUserProfile);
 
 export default userRouter;
