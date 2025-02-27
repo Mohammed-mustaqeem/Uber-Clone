@@ -29,20 +29,21 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-userSchema.method.generateAuthToken = () => {
-  const token = JsonWebToken.sign({ id: this._id }, process.env.SECRET_KEY, {
-    expiresIn: "1h",
-  });
-  return token;
-};
+// userSchema.method.generateAuthToken = () => {
+//   const token = JsonWebToken.sign({ id: this._id }, process.env.SECRET_KEY, {
+//     expiresIn: "1h",
+//   });
+//   return token;
+// };
 
-userSchema.static.hashpassword = async (password) => {
-  return await bcrypt.hash(password, 10);
-};
+// userSchema.static.hashpassword = async (password) => {
+//   return await bcrypt.hash(password, 10);
+// };
 
-userSchema.method.comparePassword = async (password) => {
-  return await bcrypt.compare(password, this.password);
-};
+
+// userSchema.method.comparePassword = async (password) => {
+//   return await bcrypt.compare(password, this.password);
+// };
 
 
 const userModel = mongoose.model("user", userSchema);

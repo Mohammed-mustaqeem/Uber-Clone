@@ -1,6 +1,8 @@
 import { createUser } from "../services/userServices.js";
 import userModel from "../models/userModel.js";
 import { validationResult } from "express-validator";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 export const createUserCtrl = async (req, res) => {
   const errors = validationResult(req);
@@ -10,10 +12,8 @@ export const createUserCtrl = async (req, res) => {
   console.log(req.body);
   try {
     const { fullname, email, password } = req.body;
-    if (!fullname || !fullname.firstname || !fullname.lastname) {
-      return res.status(400).json({ error: "Invalid fullname format" });
-    }
-    const hashedPassword = await userModel.hashpassword(password);
+   
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await createUser({
       firstname: fullname.firstname,
@@ -22,7 +22,11 @@ export const createUserCtrl = async (req, res) => {
       password: hashedPassword,
     });
 
-    const token = user.generateAuthToken();
+    const token = await jwt.sign(
+      { email: user.email },
+      process.env.SECRET_KEY,
+      { expiresIn: "1h" }
+    );
 
     res.status(201).json({ user, token });
   } catch (error) {
