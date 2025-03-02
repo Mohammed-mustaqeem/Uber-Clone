@@ -3,6 +3,7 @@ import userModel from "../models/userModel.js";
 import { validationResult } from "express-validator";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import blackListTokenModel from "../models/balckListToken.model.js";
 
 export const createUserCtrl = async (req, res) => {
   const errors = validationResult(req);
@@ -12,7 +13,7 @@ export const createUserCtrl = async (req, res) => {
   console.log(req.body);
   try {
     const { fullname, email, password } = req.body;
-   
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await createUser({
@@ -25,7 +26,7 @@ export const createUserCtrl = async (req, res) => {
     const token = await jwt.sign(
       { email: user.email },
       process.env.SECRET_KEY,
-      { expiresIn: "1h" }
+      { expiresIn: "24h" }
     );
 
     res.status(201).json({ user, token });
@@ -40,32 +41,40 @@ export const loginUserCtrl = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
   try {
-      const {email , password} = req.body;
-      const user = await userModel.findOne({email}).select("+password");
-      if (!user) {
-        return res.status(401).json({message:"Invalid email or password"});
-      }
-      const isMatched = await bcrypt.compare(password, user.password);
-      if (!isMatched) {
-        return res.status(401).json({message:"Invalid email or password"});
-      }
-       const token = await jwt.sign(
-         { email: user.email },
-         process.env.SECRET_KEY,
-         { expiresIn: "1h" }
-       );
+    const { email, password } = req.body;
+    const user = await userModel.findOne({ email }).select("+password");
+    if (!user) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+    const isMatched = await bcrypt.compare(password, user.password);
+    if (!isMatched) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+    const token = await jwt.sign(
+      { email: user.email },
+      process.env.SECRET_KEY,
+      { expiresIn: "24h" }
+    );
 
-       res.cookie("token", token);
+    res.cookie("token", token);
 
-       return res.status(200).json({ user, token });
-    
+    return res.status(200).json({ user, token });
   } catch (error) {
     console.log(error.message);
-    return res.status(500).json({message:"Internal server error"});
+    return res.status(500).json({ message: "Internal server error" });
   }
-}
+};
 
-export const getUserProfile = async (req, res)=>{
+export const getUserProfile = async (req, res) => {
+  res.status(200).json({ user: req.user });
+};
 
-  res.status(200).json({user: req.user});
-}
+export const logoutUser = async (req, res) => {
+  res.clearCookie("token");
+  // console.log(req.cookies);
+  const token = req.cookies.toke || req.headers.authorization?.split(" ")[1];
+
+  await blackListTokenModel.create({ token });
+
+  res.status(200).json({ message: "Logout successfully" });
+};

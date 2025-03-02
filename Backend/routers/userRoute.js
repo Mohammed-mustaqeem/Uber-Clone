@@ -2,7 +2,7 @@ import express from 'express'
 
 const userRouter = express.Router();
 import { body } from 'express-validator';
-import { createUserCtrl, getUserProfile, loginUserCtrl } from '../controllers/userControler.js';
+import { createUserCtrl, getUserProfile, loginUserCtrl, logoutUser } from '../controllers/userControler.js';
 import { authUser } from '../middlewares/Auth.js';
 
 
@@ -26,5 +26,6 @@ userRouter.post("/login",[
 ],loginUserCtrl)
 
 userRouter.get("/profile", authUser, getUserProfile);
+userRouter.get("/logout",authUser, logoutUser);
 
 export default userRouter;
