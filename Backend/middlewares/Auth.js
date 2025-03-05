@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 export const authUser = async (req, res, next) => {
   const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
   if (!token) {
-    return res.status(401).json({ msg: "Not authorized, token not provided" });
+    return res.status(401).json({ msg: "Not authorized" });
   }
 
   const blackListToken = await userModel.findOne({ token: token });

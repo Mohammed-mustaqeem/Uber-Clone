@@ -70,11 +70,12 @@ export const getUserProfile = async (req, res) => {
 };
 
 export const logoutUser = async (req, res) => {
+  
   res.clearCookie("token");
   // console.log(req.cookies);
   const token = req.cookies.toke || req.headers.authorization?.split(" ")[1];
 
   await blackListTokenModel.create({ token });
 
-  res.status(200).json({ message: "Logout successfully" });
+  return res.status(200).json({ message: "Logout successfully" });
 };
