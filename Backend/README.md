@@ -32,7 +32,7 @@ This endpoint is used to register a new user. It validates the input data, hashe
       "lastname": "Doe"
     },
     "email": "john.doe@example.com",
-    "password": "$2b$10$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36Zf4z6wYFZx1Z1Z1Z1Z1Z1Z1Z1Z1",
+    "password": "$2b$10$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36Zf4z6wYFZx1Z1Z1Z1Z1Z1Z1Z1Z1Z1",
     "socketId": null
   },
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
@@ -151,7 +151,7 @@ This endpoint is used to get the profile of the authenticated user.
 
 #### Success (200 OK)
 
-````json
+```json
 {
   "user": {
     "_id": "603d2149fc13ae1a00000000",
@@ -169,18 +169,22 @@ This endpoint is used to get the profile of the authenticated user.
 {
   "message": "An error occurred on the server"
 }
+```
 
 # User Logout Endpoint Documentation
 
 ## Endpoint: `/users/logout`
 
 ### Description
+
 This endpoint is used to log out the authenticated user. It invalidates the JWT token.
 
 ### Required Data
+
 - No data required.
 
 ### Status Codes
+
 - `200 OK`: The user was successfully logged out. Returns a success message.
 - `401 Unauthorized`: The user is not authenticated. Returns an error message.
 - `500 Internal Server Error`: An error occurred on the server. Returns an error message.
@@ -188,7 +192,9 @@ This endpoint is used to log out the authenticated user. It invalidates the JWT 
 ### Example Response
 
 #### Success (200 OK)
+
 ```json
 {
   "message": "Logout successfully"
 }
+```
