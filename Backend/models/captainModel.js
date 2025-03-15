@@ -1,68 +1,66 @@
 import mongoose from "mongoose";
 
 const captainSchema = new mongoose.Schema({
-    fullname:{
-        firstname:{
-            type: String,
-            required: true,
-            minlength: [3, "First name must be at least 3 characters required"],
-        },
-        lastname:{
-            type: String,
-            minlength: [3, "Last name must be at least 3 characters required"]
-        }
+  fullname: {
+    firstname: {
+      type: String,
+      required: true,
+      minlength: [3, "First name must be at least 3 characters required"],
     },
-    email:{
-        type: String,
-        required:true,
-        unique:true,
-        lowercase:true,
-        match: [/\S+@\S+\.\S+/, "Please enter a valid email"]
+    lastname: {
+      type: String,
+      minlength: [3, "Last name must be at least 3 characters required"],
     },
-    password:{
-        type: String,
-        required: true,
-        select: false
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true,
+    match: [/\S+@\S+\.\S+/, "Please enter a valid email"],
+  },
+  password: {
+    type: String,
+    required: true,
+    select: false,
+  },
+  socketId: {
+    type: String,
+  },
+  status: {
+    type: String,
+    enum: ["active", "inactive"],
+    default: "active",
+  },
+  vehicle: {
+    color: {
+      type: String,
+      required: true,
     },
-    socketId:{
-        type: String
+    plate: {
+      type: String,
+      required: true,
     },
-    status:{
-        type:String,
-        enum:["active", "inactive"],
-        default: "active"
+    capacity: {
+      type: Number,
+      required: true,
+      min: [1, "Capacity must be at least 1"],
     },
-    vheicle:{
-       color:{
-           type: String,
-           required: true
-       },
-       plate:{
-              type: String,
-              required: true
-       },
-       capacity:{
-        type:Number,
-        required: true,
-        min: [1, "Capacity must be at least 1"]
-       },
-       vheicleType:{
-           type: String,
-           required: true,
-           enum:["car", "bus", "auto"],
-           
-       }
+    vehicleType: {
+      type: String,
+      required: true,
+      enum: ["car", "bus", "auto"],
     },
-    location:{
-        lat:{
-            type:Number
-        },
-        lng:{
-            type:Number
-        }
-    }
-
-})
+  },
+  location: {
+    lat: {
+      type: Number,
+    },
+    lng: {
+      type: Number,
+    },
+  },
+});
 
 const captainModel = mongoose.model("captain", captainSchema);
 

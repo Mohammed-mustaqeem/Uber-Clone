@@ -13,16 +13,16 @@ captainRouter.post(
     body("password")
       .isLength({ min: 6 })
       .withMessage("Password must be at least 6 characters long"),
-    body("vehcile.color")
+    body("vehicle.color")
       .isLength({ min: 3 })
       .withMessage("Color must be at least 3 characters required"),
-    body("vehcile.plate")
+    body("vehicle.plate")
       .isLength({ min: 3 })
       .withMessage("Plate must be at least 3 characters required"),
-    body("vehcile.capacity")
-      .isLength({ min: 3 })
-      .withMessage("capacity must be at least 3 characters required"),
-    body("vehcile.vehcileType")
+    body("vehicle.capacity")
+      .isInt({ min: 1 })
+      .withMessage("capacity must be at least 1 characters required"),
+    body("vehicle.vehicleType")
       .isIn(["car", "motorcycle", "auto"])
       .withMessage("Vehicle type must be at least 3 characters required"),
   ],

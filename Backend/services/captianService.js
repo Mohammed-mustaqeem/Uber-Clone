@@ -11,7 +11,14 @@ export const CaptainService = async ({
   vehicleType,
 }) => {
   if (
-    (!firstname ||!lastname ||!email ||!password ||!color ||!plate ||!capacity ||!vehicleType)
+    !firstname ||
+    !lastname ||
+    !email ||
+    !password ||
+    !color ||
+    !plate ||
+    !capacity ||
+    !vehicleType
   ) {
     throw new Error("All fields are required");
   }
@@ -19,7 +26,7 @@ export const CaptainService = async ({
     fullname: { firstname, lastname },
     email,
     password,
-    vehcile: { color, plate, capacity, vehicleType },
-  })
+    vehicle: { color, plate, capacity, vehicleType },
+  });
   return captain;
 };
