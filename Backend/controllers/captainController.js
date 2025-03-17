@@ -34,3 +34,26 @@ export const registerCaptain = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const captainLogin = async (req, res) => {
+  try {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json({ errors: error.array() });
+    }
+    const {email,password}=req.body;
+    const captain = await captainModel.findOne({ email}).select('+password')
+    if(!captain){
+      return res.status(400).json({message: 'User not found'})
+    }
+    console.log(captain.password);
+    const verifyPass = await bcrypt.compare(password, captain.password)
+    if(!verifyPass){
+      return res.status(400).json({message: 'Invalid Password'})
+    }
+    const token = jwt.sign({email:captain.email}, process.env.SECRET_KEY)
+    res.status(200).json({captain, token})
+  } catch (error) {
+    console.log(error.message)
+  }
+}

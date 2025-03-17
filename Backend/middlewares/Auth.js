@@ -1,3 +1,4 @@
+import blackListTokenModel from "../models/balckListToken.model.js";
 import userModel from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 
@@ -7,7 +8,7 @@ export const authUser = async (req, res, next) => {
     return res.status(401).json({ msg: "Not authorized" });
   }
 
-  const blackListToken = await userModel.findOne({ token: token });
+  const blackListToken = await blackListTokenModel.findOne({ token: token });
 
   if (blackListToken) {
     return res.status(401).json({ msg: "Not authorized, token blacklisted" });
@@ -23,3 +24,22 @@ export const authUser = async (req, res, next) => {
     return res.status(401).json({ msg: "Not authorized, token failed" });
   }
 };
+
+export const authCaptain =async (req,res,next) => {
+  const token= req.cookies.token || req.headers.authorization?.split(" ")[1];
+  if (!token) {
+    return res.status(401).json({ msg: "Not authorized" });
+  }
+  const isBlackList = await blackListTokenModel.findOne({ token: token });
+  if (isBlackList) {
+    return res.status(401).json({ msg: "Not authorized, token blacklisted" });
+  }
+  try {
+       const decoded = jwt.verify(token, process.env.SECRET_KEY);
+       const captain = await userModel.findOne(decoded._id);
+        req.captain = captain;
+    
+  } catch (error) {
+    res.status(401).json({ message: "Not authorized token failed" });
+  }
+}
