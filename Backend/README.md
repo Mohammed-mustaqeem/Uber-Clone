@@ -297,3 +297,175 @@ This endpoint is used to register a new captain. It validates the input data, ha
   "message": "An error occurred on the server"
 }
 ````
+
+# Captain Login Endpoint Documentation
+
+## Endpoint: `/captain/login`
+
+### Description
+
+This endpoint is used to log in an existing captain. It validates the input data, checks the captain's credentials, and returns a JSON Web Token (JWT) for authentication.
+
+### Required Data
+
+- `email` (string): The email address of the captain. Must be a valid email format.
+- `password` (string): The password for the captain account. Must be at least 6 characters long.
+
+### Status Codes
+
+- `200 OK`: The captain was successfully logged in. Returns the captain object and a JWT token.
+- `400 Bad Request`: The input data is invalid or the credentials are incorrect. Returns an error message.
+- `500 Internal Server Error`: An error occurred on the server. Returns an error message.
+
+### Example Response
+
+#### Success (200 OK)
+
+```json
+{
+  "captain": {
+    "_id": "603d2149fc13ae1a00000000",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com",
+    "vehicle": {
+      "color": "red",
+      "plate": "ABC123",
+      "capacity": 4,
+      "vehicleType": "car"
+    },
+    "socketId": null
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+#### Error (400 Bad Request)
+
+```json
+{
+  "message": "User not found"
+}
+```
+
+```json
+{
+  "message": "Invalid Password"
+}
+```
+
+#### Error (500 Internal Server Error)
+
+```json
+{
+  "message": "An error occurred on the server"
+}
+```
+
+---
+
+# Captain Profile Endpoint Documentation
+
+## Endpoint: `/captain/profile`
+
+### Description
+
+This endpoint is used to retrieve the profile of the authenticated captain.
+
+### Required Data
+
+- No data required.
+
+### Status Codes
+
+- `200 OK`: The captain profile was successfully retrieved. Returns the captain object.
+- `401 Unauthorized`: The captain is not authenticated. Returns an error message.
+- `500 Internal Server Error`: An error occurred on the server. Returns an error message.
+
+### Example Response
+
+#### Success (200 OK)
+
+```json
+{
+  "user": {
+    "_id": "603d2149fc13ae1a00000000",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com",
+    "vehicle": {
+      "color": "red",
+      "plate": "ABC123",
+      "capacity": 4,
+      "vehicleType": "car"
+    },
+    "socketId": null
+  }
+}
+```
+
+#### Error (401 Unauthorized)
+
+```json
+{
+  "message": "Not authorized"
+}
+```
+
+#### Error (500 Internal Server Error)
+
+```json
+{
+  "message": "An error occurred on the server"
+}
+```
+
+---
+
+# Captain Logout Endpoint Documentation
+
+## Endpoint: `/captain/logout`
+
+### Description
+
+This endpoint is used to log out the authenticated captain. It invalidates the JWT token.
+
+### Required Data
+
+- No data required.
+
+### Status Codes
+
+- `200 OK`: The captain was successfully logged out. Returns a success message.
+- `401 Unauthorized`: The captain is not authenticated. Returns an error message.
+- `500 Internal Server Error`: An error occurred on the server. Returns an error message.
+
+### Example Response
+
+#### Success (200 OK)
+
+```json
+{
+  "message": "Logout successfully"
+}
+```
+
+#### Error (401 Unauthorized)
+
+```json
+{
+  "message": "Not authorized"
+}
+```
+
+#### Error (500 Internal Server Error)
+
+```json
+{
+  "message": "An error occurred on the server"
+}
+```

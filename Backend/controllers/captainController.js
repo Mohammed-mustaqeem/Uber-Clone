@@ -3,6 +3,7 @@ import { validationResult } from "express-validator";
 import { CaptainService } from "../services/captianService.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import blackListTokenModel from "../models/balckListToken.model.js";
 
 export const registerCaptain = async (req, res) => { 
   try {
@@ -46,14 +47,29 @@ export const captainLogin = async (req, res) => {
     if(!captain){
       return res.status(400).json({message: 'User not found'})
     }
-    console.log(captain.password);
     const verifyPass = await bcrypt.compare(password, captain.password)
     if(!verifyPass){
       return res.status(400).json({message: 'Invalid Password'})
     }
     const token = jwt.sign({email:captain.email}, process.env.SECRET_KEY)
+  res.cookie('Token', token)
     res.status(200).json({captain, token})
   } catch (error) {
     console.log(error.message)
   }
+}
+
+export const getCaptainProfile = async (req, res) => {
+  res.status(200).json({ user: req.captain });
+}
+
+
+export const captainLogout = async (req,res)=>{
+  const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+
+  await blackListTokenModel.create({ token });
+
+  res.clearCookie("token"); 
+
+  res.status(200).json({ message: "Logout successfully" });
 }
