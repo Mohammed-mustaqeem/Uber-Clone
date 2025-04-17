@@ -1,6 +1,7 @@
 import React from 'react'
 import logo from '../../../public/images/logo.png'
 import bgImage from "../../../public/images/bg-2.avif";
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   return (
@@ -16,9 +17,9 @@ const Home = () => {
         <img className="w-16 ml-5" src={logo} alt="" />
         <div className="bg-white pb-7 py-4 px-4">
           <h2 className="text-3xl font-bold">Get Started with Uber</h2>
-          <button className="w-full bg-black text-white py-3 rounded mt-5">
+          <Link to='/login' className=" flex items-center justify-center w-full bg-black text-white py-3 rounded mt-5">
             Continue
-          </button>
+          </Link>
         </div>
       </div>
     </div>
