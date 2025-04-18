@@ -22,7 +22,7 @@ const UserLogin = () => {
       </div>
 
       {/* Form Container */}
-      <div className="w-full max-w-sm space-y-4">
+      <div className="w-full max-w-sm space-y-2">
         <form
           className="space-y-6"
           onSubmit={(e) => {
@@ -30,7 +30,7 @@ const UserLogin = () => {
           }}
         >
           {/* Title */}
-          <h1 className="text-2xl font-semibold text-black text-center">
+          <h1 className=" font-semibold text-black">
             What's your email?
           </h1>
 
