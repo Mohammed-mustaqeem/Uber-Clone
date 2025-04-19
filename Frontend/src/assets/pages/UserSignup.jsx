@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../public/images/logo.png";
+import axios from "axios";
+import { userDataContext } from "../../Context/UserContext";
 
 const UserSignup = () => {
   const [firstName, setFirstName] = useState("");
@@ -9,24 +11,33 @@ const UserSignup = () => {
   const [password, setPassword] = useState("");
   const [userData, setUserData] = useState({});
 
+  const navigate = useNavigate();
+  const { user, setUser } = React.useContext(userDataContext);
 
-
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     e.preventDefault();
-  setUserData({
-    username:{firstName:firstName, lastName:lastName},
-    email: email,
-    password: password,
+  const newUser = {
+     fullname: { firstName: firstName, lastName: lastName },
+      email: email,
+      password: password,
+    }
 
-  })
- 
-   
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_URL}/users/register`,
+      newUser
+    );
+    if (response.status === 201) {
+      console.log("User registered successfully", response.data);
+      const data = response.data;
+      setUser(data.user)
+      navigate("/home");
+    }
+
     setFirstName("");
     setLastName("");
     setEmail("");
     setPassword("");
-
-  }
+  };
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center px-4 py-8">
       {/* Logo Section */}
@@ -36,19 +47,19 @@ const UserSignup = () => {
 
       {/* Form Container */}
       <div className="w-full max-w-sm space-y-2">
-        <form className="space-y-2" onSubmit={(e)=> handleSubmit(e)}>
+        <form className="space-y-2" onSubmit={(e) => handleSubmit(e)}>
           <h3 className=" font-semibold text-black ">What's your name?</h3>
           <div className="flex gap-2">
             <input
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
               type="text"
               placeholder="First Name"
               className="w-1/2 px-3 py-3 border  border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black placeholder:text-sm"
             />
             <input
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
               type="text"
               placeholder="Laset Name"
               className="w-1/2 px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black placeholder:text-sm"
@@ -80,7 +91,7 @@ const UserSignup = () => {
             type="submit"
             className="w-full flex items-center mt-2 justify-center bg-black text-white font-medium py-3 rounded-lg hover:bg-gray-900 transition"
           >
-            Continue
+            Create account
           </button>
         </form>
 
@@ -131,6 +142,6 @@ const UserSignup = () => {
       </div>
     </div>
   );
-}
+};
 
-export default UserSignup
+export default UserSignup;

@@ -31,9 +31,7 @@ const CaptainLogin = () => {
           }}
         >
           {/* Title */}
-          <h1 className="text-2xl font-semibold text-black text-center">
-            What's your email?
-          </h1>
+          <h1 className=" font-semibold text-black ">What's your email?</h1>
 
           {/* Input Fields */}
           <input
@@ -56,7 +54,7 @@ const CaptainLogin = () => {
             type="submit"
             className="w-full flex items-center justify-center bg-black text-white font-medium py-3 rounded-lg hover:bg-gray-900 transition"
           >
-            Continue
+            Login
           </button>
         </form>
 
@@ -69,22 +67,13 @@ const CaptainLogin = () => {
           </Link>
         </p>
 
-        {/* Divider */}
-        <div className="flex items-center gap-4">
-          <hr className="flex-grow border-gray-300" />
-          <span className="text-sm text-gray-500">or</span>
-          <hr className="flex-grow border-gray-300" />
-        </div>
-
         {/* Captain Login */}
-        <Link
-          to="/login"
-          className="w-full flex items-center gap-3 justify-center bg-green-300 border border-black py-3 rounded-lg hover:bg-green-400 transition"
-        >
-          <span className="text-sm font-medium text-gray-900">
-            Sign in as User
-          </span>
-        </Link>
+      
+        <p className="text-xs text-gray-500 mt-30 text-center leading-5">
+          This Site is protected by reCAPTCHA and the{" "}
+          <span className="underline">Google Privacy</span> Policy and{" "}
+          <span className="underline">Terms of Service apply</span>.
+        </p>
       </div>
     </div>
   );

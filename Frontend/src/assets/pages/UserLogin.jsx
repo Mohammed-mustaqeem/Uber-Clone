@@ -55,7 +55,7 @@ const UserLogin = () => {
             type="submit"
             className="w-full flex items-center justify-center bg-black text-white font-medium py-3 rounded-lg hover:bg-gray-900 transition"
           >
-            Continue
+            Login
           </button>
         </form>
 

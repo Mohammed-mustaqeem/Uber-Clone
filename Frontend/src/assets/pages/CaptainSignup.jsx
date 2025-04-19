@@ -1,8 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo2 from "../../../public/images/captain-logo.svg";
 
 const CaptainSignup = () => {
+
+   const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [userData, setUserData] = useState({});
+  
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      setUserData({
+        fullname: { firstName: firstName, lastName: lastName },
+        email: email,
+        password: password,
+      });
+  
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setPassword("");
+    };
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center px-4 py-8">
       {/* Logo Section */}
@@ -12,7 +32,7 @@ const CaptainSignup = () => {
 
       {/* Form Container */}
       <div className="w-full max-w-sm space-y-2">
-        <form className="space-y-1" >
+        <form className="space-y-1" onSubmit={(e) => handleSubmit(e)}>
           <h3 className=" font-semibold text-black ">What's your name?</h3>
           <div className="flex gap-2">
             <input
@@ -23,8 +43,8 @@ const CaptainSignup = () => {
               className="w-1/2 px-3 py-2 border  border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black placeholder:text-sm"
             />
             <input
-              // value={lastName}
-              // onChange={(e) => setLastName(e.target.value)}
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
               type="text"
               placeholder="Laset Name"
               className="w-1/2 px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black placeholder:text-sm"
@@ -36,16 +56,16 @@ const CaptainSignup = () => {
 
           {/* Input Fields */}
           <input
-            // value={email}
-            // onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             type="text"
             placeholder="Enter Your Email"
             className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black placeholder:text-sm"
           />
           <h3 className=" font-semibold text-black">Enter Password</h3>
           <input
-            // value={password}
-            // onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             type="password"
             placeholder="Enter Your Password"
             className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black placeholder:text-sm"
@@ -63,7 +83,7 @@ const CaptainSignup = () => {
         {/* Sign Up Link */}
         <p className="text-center">
           Already have an Account?
-          <Link className="text-blue-600" to="/login">
+          <Link className="text-blue-600" to="/captain-login">
             {" "}
             Login{" "}
           </Link>
@@ -76,34 +96,21 @@ const CaptainSignup = () => {
           <hr className="flex-grow border-gray-300" />
         </div>
 
-        {/* Google Sign-in */}
-        <button className="w-full flex items-center gap-3 justify-center border border-gray-300 py-3 rounded-lg hover:bg-gray-100 transition">
-          <img
-            src="https://www.svgrepo.com/show/475656/google-color.svg"
-            alt="Google"
-            className="w-5 h-5"
-          />
-          <span className="text-sm font-medium text-gray-700">
-            Continue with Google
-          </span>
-        </button>
-
-        {/* Divider */}
-        <div className="flex items-center gap-4">
-          <hr className="flex-grow border-gray-300" />
-          <span className="text-sm text-gray-500">or</span>
-          <hr className="flex-grow border-gray-300" />
-        </div>
-
         {/* Captain Login */}
         <Link
-          to="/captain-login"
+          to="/login"
           className="w-full flex items-center gap-3 justify-center bg-green-300 border border-black py-3 rounded-lg hover:bg-green-400 transition"
         >
           <span className="text-sm font-medium text-gray-700">
-            Sign in as Captain
+            Sign in as user
           </span>
         </Link>
+        {/* Terms */}
+        <p className="text-xs text-gray-500 mt-6 text-center leading-5">
+          This Site is protected by reCAPTCHA and the{" "}
+          <span className="underline">Google Privacy</span> Policy and{" "}
+          <span className="underline">Terms of Service apply</span>.
+        </p>
       </div>
     </div>
   );
