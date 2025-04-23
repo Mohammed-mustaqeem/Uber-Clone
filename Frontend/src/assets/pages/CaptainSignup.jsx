@@ -36,8 +36,8 @@ const CaptainSignup = () => {
           <h3 className=" font-semibold text-black ">What's your name?</h3>
           <div className="flex gap-2">
             <input
-              // value={firstName}
-              // onChange={(e) => setFirstName(e.target.value)}
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
               type="text"
               placeholder="First Name"
               className="w-1/2 px-3 py-2 border  border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black placeholder:text-sm"
