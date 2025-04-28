@@ -6,8 +6,8 @@ const UserContext = ({children}) => {
 
     const [UserData, setUserData] = useState({
         fullname:{
-            firstName:"",
-            lastName:""
+            firstname:"",
+            lastname:""
         },
         email:"",
     });
