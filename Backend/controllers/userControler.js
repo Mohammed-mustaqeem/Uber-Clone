@@ -55,6 +55,7 @@ export const loginUserCtrl = async (req, res) => {
       process.env.SECRET_KEY,
       { expiresIn: "24h" }
     );
+    
 
     res.cookie("token", token);
 
