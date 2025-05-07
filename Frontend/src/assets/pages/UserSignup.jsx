@@ -31,6 +31,7 @@ const UserSignup = () => {
       console.log("User registered successfully", response.data);
       const data = response.data;
       setUser(data.user);
+      localStorage.setItem("token", data.token);
       navigate("/home");
     }
 

@@ -5,7 +5,7 @@ import { userDataContext } from "../../Context/UserContext";
 import axios from "axios";
 const UserLogin = () => {
   const [email, setEmail] = useState("");
-  const [Password, setPassword] = useState("");
+  const [password, setPassword] = useState("");
   const [userData, setUserData] = useState({});
 
   const [User , setUser] = useContext(userDataContext)
@@ -13,18 +13,28 @@ const UserLogin = () => {
 
   const handleSubmit =async (e) => {
     e.preventDefault();
-    setUserData({ email: email, Password: Password });
-    console.log(userData);
+    setUserData({ email: email, password: password });
+  
 
-    const response = await axios.post(
-      `${import.meta.env.VITE_BASE_URL}/users/login`,
-      userData
-    );
-    if (response.status === 200) {
-      const data = response.data;
-      console.log(`login success , ${data.user}`)
-      setUser(data.user)
-      Navigate('/home')
+    const loginData = {
+      email: email,
+      password: password,
+    };
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/users/login`,
+        loginData
+      );
+      if (response.status === 200) {
+        const data = response.data;
+        console.log(`login success , ${data}`);
+        setUser(data.user);
+        localStorage.setItem('token',data.token)
+        Navigate("/home");
+      }
+    } catch (error) {
+      console.log("login error", error.message)
     }
 
     setEmail("");
@@ -61,7 +71,7 @@ const UserLogin = () => {
           />
           <input
             type="password"
-            value={Password}
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter Your Password"
             className="w-full px-4 py-3 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
