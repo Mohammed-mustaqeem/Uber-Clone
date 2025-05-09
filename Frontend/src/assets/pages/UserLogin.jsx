@@ -8,13 +8,12 @@ const UserLogin = () => {
   const [password, setPassword] = useState("");
   const [userData, setUserData] = useState({});
 
-  const [User , setUser] = useContext(userDataContext)
-  const Navigate = useNavigate()
+  const [User, setUser] = useContext(userDataContext);
+  const Navigate = useNavigate();
 
-  const handleSubmit =async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setUserData({ email: email, password: password });
-  
 
     const loginData = {
       email: email,
@@ -28,13 +27,13 @@ const UserLogin = () => {
       );
       if (response.status === 200) {
         const data = response.data;
-        console.log(`login success , ${data}`);
+        console.log("login success", data); // Log the response data instead of the entire response
         setUser(data.user);
-        localStorage.setItem('token',data.token)
+        localStorage.setItem("token", data.token);
         Navigate("/home");
       }
     } catch (error) {
-      console.log("login error", error.message)
+      console.log("login error", error.message);
     }
 
     setEmail("");
@@ -57,9 +56,7 @@ const UserLogin = () => {
           }}
         >
           {/* Title */}
-          <h1 className=" font-semibold text-black">
-            What's your email?
-          </h1>
+          <h1 className=" font-semibold text-black">What's your email?</h1>
 
           {/* Input Fields */}
           <input

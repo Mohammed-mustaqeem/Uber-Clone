@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import logo2 from "../../../public/images/captain-logo.svg";
+import { captainDataContext } from "../../Context/CaptainContext";
 
 const CaptainSignup = () => {
 
@@ -9,6 +10,8 @@ const CaptainSignup = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [userData, setUserData] = useState({});
+
+    const {captian , setCaptain} = useContext(captainDataContext)
   
     const handleSubmit = (e) => {
       e.preventDefault();
